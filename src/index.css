@@ -101,6 +101,7 @@
     justify-content: center;
     align-items: center;
     font-size: 30px;
+    cursor: pointer;
 }
 
 .keyboard__item--dark {
@@ -109,6 +110,14 @@
 
 .keyboard__item--light {
     color: rgb(138, 138, 138)
+}
+
+.keyboard__item--dark:hover {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.keyboard__item--light:hover {
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .keyboard__main-item--dark {
@@ -121,10 +130,30 @@
     color: rgb(0, 0, 0);
 }
 
+.keyboard__main-item--light:hover {
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.keyboard__main-item--dark:hover {
+    background-color: rgb(164, 164, 164);
+}
+
 .keyboard__math__signs {
     color: rgb(61, 221, 154);
-    border-radius: 50%;
     background-color: white;
+}
+
+.keyboard__math__signs--dark {
+    border-radius: 50%;
+}
+
+.keyboard__math__signs--dark:hover {
+    border-radius: 50%;
+    background-color: rgb(245, 245, 245);
+}
+
+.keyboard__math__signs--light:hover {
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 /* ====================== / Keyboard ========================== */
