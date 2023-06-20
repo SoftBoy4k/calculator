@@ -58,7 +58,11 @@
 .window {
     width: 100%;
     height: 250px;
-    
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    flex-direction: column;
+    padding: 1rem;
 }
 
 .window--dark {
@@ -69,6 +73,31 @@
 .window--light {
     background-color: rgb(255, 255, 255);
     border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.window__main-text {
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.window__secondary-text {
+    font-size: 1.5rem;
+}
+
+.window__main-text--dark {
+    color: rgb(245, 245, 245);
+}
+
+.window__main-text--light {
+    color: black;
+}
+
+.window__secondary-text--dark {
+    color: rgb(225, 225, 225);
+}
+
+.window__secondary-text--light {
+    color: rgb(50, 50, 50);
 }
 
 /* ====================== / Window ========================== */

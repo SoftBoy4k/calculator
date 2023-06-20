@@ -1,10 +1,12 @@
 import { deleteArrowIconDark, deleteArrowIconLight } from "../svg"
 
 interface KeyboardProps {
-  isDarkTheme: boolean
+  isDarkTheme: boolean,
+  setCurrentEquation: (arg0: string) => void,
 }
 
-const Keyboard = ({isDarkTheme}: KeyboardProps) => {
+const Keyboard = ({isDarkTheme, setCurrentEquation}: KeyboardProps) => {
+
   return (
     <ul className={`keyboard ${isDarkTheme ? "keyboard--dark" : "keyboard--light" }`}>
       <li className={`keyboard__item ${isDarkTheme ? "keyboard__main-item--dark" : "keyboard__main-item--light" }`}>AC</li>
