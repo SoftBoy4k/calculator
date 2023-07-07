@@ -7,18 +7,18 @@ import Window from './components/Window';
 
 function App() {
 
-  const answer = "= 3";
+  const [answer, setAnswer] = useState<string>("");
 
   const [isDarkTheme, setIsDarkTheme] = useState<boolean>(false);
 
-  const [currentEquation, setCurrentEquation] = useState<string>("1+2");
+  const [currentEquation, setCurrentEquation] = useState<string>("0");
 
   return (
     <>
       <Container>
         <Header isDarkTheme={isDarkTheme} setIsDarkTheme={setIsDarkTheme}/>
         <Window isDarkTheme={isDarkTheme} currentEquation={currentEquation} answer={answer}/>
-        <Keyboard isDarkTheme={isDarkTheme} setCurrentEquation={setCurrentEquation}/>
+        <Keyboard isDarkTheme={isDarkTheme} setCurrentEquation={setCurrentEquation} setAnswer={setAnswer}/>
       </Container>
     </>
   )
