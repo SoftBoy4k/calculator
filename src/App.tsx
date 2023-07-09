@@ -18,7 +18,7 @@ function App() {
       <Container>
         <Header isDarkTheme={isDarkTheme} setIsDarkTheme={setIsDarkTheme}/>
         <Window isDarkTheme={isDarkTheme} currentEquation={currentEquation} answer={answer}/>
-        <Keyboard isDarkTheme={isDarkTheme} setCurrentEquation={setCurrentEquation} setAnswer={setAnswer}/>
+        <Keyboard isDarkTheme={isDarkTheme} setCurrentEquation={setCurrentEquation} answer={answer} setAnswer={setAnswer}/>
       </Container>
     </>
   )

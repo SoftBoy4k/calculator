@@ -3,19 +3,32 @@ import { deleteArrowIconDark, deleteArrowIconLight } from "../svg"
 
 interface KeyboardProps {
   isDarkTheme: boolean,
+  answer: string,
   setAnswer: (arg0: (prev: string) => string) => void,
   setCurrentEquation: (arg0: (prev: string) => string) => void,
 }
 
-const Keyboard = ({ isDarkTheme, setCurrentEquation, setAnswer}: KeyboardProps) => {
+const Keyboard = ({ isDarkTheme, setCurrentEquation, answer, setAnswer}: KeyboardProps) => {
 
   const getCurrentEquationInArray = (numbers: string[], symbols: string[]): string[] => {
     let currentEquationArray = [];
-    for (let i = 0 ; i < symbols.length ; i++) {
-      currentEquationArray.push(numbers[i]);
-      currentEquationArray.push(symbols[i]);
+    if (numbers.length > symbols.length) {
+
+      for (let i = 0 ; i < symbols.length; i++) {
+        currentEquationArray.push(numbers[i]);
+        currentEquationArray.push(symbols[i]);
+      }
+
+      currentEquationArray.push(numbers[numbers.length - 1]);
+    } else {
+      
+      for (let i = 0 ; i < symbols.length - 1; i++) {
+        currentEquationArray.push(numbers[i]);
+        currentEquationArray.push(symbols[i]);
+      }
+
+      currentEquationArray.push(numbers[numbers.length - 1]);
     }
-    currentEquationArray.push(numbers[numbers.length - 1]);
     return currentEquationArray;
   }
 
@@ -37,6 +50,8 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, setAnswer}: KeyboardProps) 
       const resultOfHighPriorityOperations = highPrioritySymbolsOperation(equation);
       const result = lowPrioritySymbolsOperation(resultOfHighPriorityOperations);
       return result;
+    } else if (allNumber) {
+      return allNumber[0];
     }
 
     return "";
@@ -45,12 +60,14 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, setAnswer}: KeyboardProps) 
   const highPrioritySymbolsOperation = (equation: string[]): string[] => {
     let newEquation: string[] = equation;
     while (newEquation.includes("÷") || newEquation.includes("×")) {
-      const indexDivision = newEquation.indexOf("÷");
-      const indexMultiplication = newEquation.indexOf("×");
+      const indexDivision: number = newEquation.indexOf("÷");
+      const indexMultiplication: number = newEquation.indexOf("×");
       if (indexDivision > indexMultiplication) {
         newEquation = getTheResultOfTheDivision(newEquation, indexDivision);
       } else if (indexDivision < indexMultiplication) {
         newEquation = getTheResultOfTheMultiplication(newEquation, indexMultiplication);
+      } else {
+        return newEquation
       }
     }
     return newEquation;
@@ -115,12 +132,17 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, setAnswer}: KeyboardProps) 
     const target = event.currentTarget as HTMLElement
     const pressedSymbol: string = target.innerText
 
+    if (answer) {
+      setAnswer(() => "");
+      setCurrentEquation(() => "");
+    }
+
     setCurrentEquation((prev): string => {
       const previousSimbol: string = prev[prev.length - 1];
 
       if (pressedSymbol === "AC") {
         setAnswer( () => "");
-        return "";
+        return "0";
       } else if (pressedSymbol === '') {      // pressed a delete button (arrow)
         return prev.slice(0, -1);
       } else if (pressedSymbol === '%') {
@@ -132,11 +154,21 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, setAnswer}: KeyboardProps) 
           return prev;
         }
       } else if (pressedSymbol === '=') {
+        if (!prev) {
+          return "0"
+        }
         setAnswer( (): string => {
           return "= " + calculator(prev);
         });
         return prev;
       } else if (isCorrectInputSequence(previousSimbol, pressedSymbol)) {
+        if (!prev && (pressedSymbol === "÷" || pressedSymbol === "×" || pressedSymbol === "+")) {
+          return "0"
+        } else if ((prev === "0" || prev === "00") && (pressedSymbol === "÷" || pressedSymbol === "×" || pressedSymbol === "+")) {
+          return prev;
+        } else if (prev === "0" || prev === "00") {
+          return pressedSymbol
+        }
         return prev + pressedSymbol;
       } else {
         return prev.slice(0, -1) + pressedSymbol;
