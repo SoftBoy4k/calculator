@@ -145,14 +145,6 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, answer, setAnswer}: Keyboar
         return "0";
       } else if (pressedSymbol === '') {      // pressed a delete button (arrow)
         return prev.slice(0, -1);
-      } else if (pressedSymbol === '%') {
-        const numbers: string[] | null = findAllNumbers(prev);
-        if (numbers) {
-          const lastNumber: string = numbers[numbers.length - 1];
-          return prev.slice(0, prev.indexOf(lastNumber)) + `${Number(lastNumber) * 0.01}`;
-        } else {
-          return prev;
-        }
       } else if (pressedSymbol === '=') {
         if (!prev) {
           return "0"
@@ -161,6 +153,16 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, answer, setAnswer}: Keyboar
           return "= " + calculator(prev);
         });
         return prev;
+      } else if (prev.length > 9) {
+        return prev;
+      } else if (pressedSymbol === '%') {
+        const numbers: string[] | null = findAllNumbers(prev);
+        if (numbers) {
+          const lastNumber: string = numbers[numbers.length - 1];
+          return prev.slice(0, prev.indexOf(lastNumber)) + `${Number(lastNumber) * 0.01}`;
+        } else {
+          return prev;
+        }
       } else if ((prev === "0" || prev === "00") && pressedSymbol === ".") {
         return "0" + pressedSymbol;
       } else if (isCorrectInputSequence(previousSimbol, pressedSymbol)) {
