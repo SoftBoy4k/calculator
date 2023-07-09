@@ -38,7 +38,7 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, answer, setAnswer}: Keyboar
   }
 
   const findAllSymbols = (str: string): string[] | null => {
-    const re: RegExp = /\W/g;
+    const re: RegExp = /[\+\-\×\÷]+/g;
     return str.match(re);
   }
 
@@ -161,6 +161,8 @@ const Keyboard = ({ isDarkTheme, setCurrentEquation, answer, setAnswer}: Keyboar
           return "= " + calculator(prev);
         });
         return prev;
+      } else if ((prev === "0" || prev === "00") && pressedSymbol === ".") {
+        return "0" + pressedSymbol;
       } else if (isCorrectInputSequence(previousSimbol, pressedSymbol)) {
         if (!prev && (pressedSymbol === "÷" || pressedSymbol === "×" || pressedSymbol === "+")) {
           return "0"
